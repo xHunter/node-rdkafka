@@ -38,7 +38,7 @@ This project includes two types of unit tests in this project:
 
 You can run both types of tests by using `Makefile`. Doing so calls `mocha` in your locally installed `node_modules` directory.
 
-* Before you run the tests, be sure to init and update the submodules: 
+* Before you run the tests, be sure to init and update the submodules:
   1. `git submodule init`
   2. `git submodule update`
 * To run the unit tests, you can run `make lint` or `make test`.
@@ -51,6 +51,8 @@ You can install the `node-rdkafka` module like any other module:
 ```
 npm install node-rdkafka
 ```
+
+**NOTE:** You can use a local installation of `librdkafka` if it is installed into your system libraries. To do this, provide  `BUILD_LIBRDKAFKA=1` to your `npm install` command.
 
 To use the module, you must `require` it.
 

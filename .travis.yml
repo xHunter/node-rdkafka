@@ -1,6 +1,9 @@
 dist: trusty
 language: node_js
 sudo: required
+env:
+- BUILD_LIBRDKAFKA="1"
+- BUILD_LIBRDKAFKA="0"
 node_js:
 - '4'
 - '6'
@@ -10,11 +13,13 @@ cache:
 services:
 - docker
 before_install:
+- sudo apt-get -qq update
+- sudo apt-get install -y librdkafka-dev librdkafka1 librdkafka++1
 - docker-compose up -d
 script:
 - make lint
 - make test
 - make e2e
-after_success:
-- make docs
-- echo "Disallow: /" >> docs/robots.txt
+# after_success:
+# - make docs
+# - echo "Disallow: /" >> docs/robots.txt
