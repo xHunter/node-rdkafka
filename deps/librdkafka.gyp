@@ -1,6 +1,6 @@
 {
   'variables': {
-    "WITH_SASL%": "<!(echo ${WITH_SASL:-1})"
+    "WITH_SASL%": "<!(echo ${NODE_RDKAFKA_WITH_SASL:-0})"
   },
   'targets': [
     {
@@ -52,9 +52,7 @@
     {
       "target_name": "librdkafka",
       "type": "static_library",
-      'defines': [
-         'HAVE_CONFIG_H'
-      ],
+      'defines': [],
       "include_dirs": [
         "librdkafka/src"
       ],
@@ -78,9 +76,7 @@
               '-Wno-empty-body',
               '-Wno-old-style-declaration',
             ],
-            "dependencies": [
-              "librdkafka_config"
-            ]
+            "dependencies": []
           }
         ],
         [
@@ -98,10 +94,7 @@
               'OTHER_LDFLAGS': [],
               'MACOSX_DEPLOYMENT_TARGET': '10.11',
               'libraries' : ['-lz']
-            },
-            "dependencies": [
-                "librdkafka_config"
-            ]
+            }
           }
         ],
         [
@@ -127,41 +120,6 @@
          '<!@(find librdkafka/src -name *.c ! -name rdkafka_sasl* )'
       ],
       'cflags!': [ '-fno-rtti' ],
-    },
-    {
-      "target_name": "librdkafka_config",
-      "type": "none",
-      "actions": [
-        {
-          'action_name': 'configure_librdkafka',
-          'message': 'configuring librdkafka...',
-          'inputs': [
-            'librdkafka/configure',
-          ],
-          'outputs': [
-            'librdkafka/config.h',
-          ],
-          "conditions": [
-            [ 'OS!="win"',
-              {
-                "conditions": [
-                  [ "<(WITH_SASL)==1",
-                    {
-                      'action': ['eval', 'cd librdkafka && chmod a+x ./configure && ./configure']
-                    },
-                    {
-                      'action': ['eval', 'cd librdkafka && chmod a+x ./configure && ./configure --disable-sasl']
-                    }
-                  ]
-                ]
-              },
-              {
-                'action': ['echo']
-              }
-            ]
-          ]
-        }
-      ]
     }
   ]
 }

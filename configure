@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+pushd ./deps/librdkafka > /dev/null
+
+./configure
+
+# Now we can read the generated header file to determine what is available
+# on the system
+
+make_defines=(`awk '/#define/{ print $2 "=" $3 }' < config.h`)
+
+for i in "${make_defines[@]}"
+do
+  :
+  key=${i%=*}
+  value=${i##*=}
+  if [ "$key" == "WITH_SASL" ]; then
+    export NODE_RDKAFKA_WITH_SASL="$value"
+  elif [ "$key" == "ENABLE_LZ4" ]; then
+    export NODE_RDKAFKA_WITH_LZ4="$value"
+  fi
+done
+
+
+popd > /dev/null

@@ -2,8 +2,8 @@
   "variables": {
       # may be redefined in command line on configuration stage
       "BUILD_LIBRDKAFKA%": "<!(echo ${BUILD_LIBRDKAFKA:-1})",
-      "WITH_SASL%": "<!(echo ${WITH_SASL:-1})",
-      "WITH_LZ4%": "<!(echo ${WITH_LZ4:-0})"
+      "WITH_SASL%": "<!(echo ${NODE_RDKAFKA_WITH_SASL:-0})",
+      "WITH_LZ4%": "<!(echo ${NODE_RDKAFKA_WITH_LZ4:-0})"
   },
   "targets": [
     {
