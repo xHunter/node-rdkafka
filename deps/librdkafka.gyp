@@ -77,7 +77,8 @@
               '-Wno-empty-body',
               '-Wno-old-style-declaration',
             ],
-            "dependencies": []
+            "dependencies": [],
+            'libraries' : ['-lz', '-lcrypto', '-lpthread']
           }
         ],
         [
@@ -94,7 +95,7 @@
               ],
               'OTHER_LDFLAGS': [],
               'MACOSX_DEPLOYMENT_TARGET': '10.11',
-              'libraries' : ['-lz']
+              'libraries' : ['-lz', '-lcrypto', '-lpthread']
             }
           }
         ],
