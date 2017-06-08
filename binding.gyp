@@ -2,8 +2,8 @@
   "variables": {
       # may be redefined in command line on configuration stage
       "BUILD_LIBRDKAFKA%": "<!(echo ${BUILD_LIBRDKAFKA:-1})",
-      "WITH_SASL%": "<!(echo ${NODE_RDKAFKA_WITH_SASL:-0})",
-      "WITH_LZ4%": "<!(echo ${NODE_RDKAFKA_WITH_LZ4:-0})"
+      "WITH_SASL%": "<!(node ./util/has-lib.js sasl)",
+      "WITH_LZ4%": "<!(node ./util/has-lib.js lz4)"
   },
   "targets": [
     {
@@ -64,7 +64,7 @@
             },
           }
         ],
-        [ "<(WITH_SASL)==1",
+        [ 'WITH_SASL=="true"',
           {
             'libraries' : ['-lsasl2'],
             'conditions': [
@@ -78,7 +78,7 @@
             ]
           }
         ],
-        [ "<(WITH_LZ4)==1",
+        [ 'WITH_LZ4=="true"',
           {
             'libraries' : ['-llz4'],
             'conditions': [

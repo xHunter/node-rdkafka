@@ -1,6 +1,7 @@
 {
   'variables': {
-    "WITH_SASL%": "<!(echo ${NODE_RDKAFKA_WITH_SASL:-0})"
+    "WITH_SASL%": "<!(node ../util/has-lib.js sasl)",
+    "WITH_LZ4%": "<!(node ../util/has-lib.js lz4)"
   },
   'targets': [
     {
@@ -107,17 +108,26 @@
             },
           }
         ],
-        [ "<(WITH_SASL)==1",
+        [ 'WITH_SASL=="true"',
           {
             'sources': [
               'librdkafka/src/rdkafka_sasl.c',
               'librdkafka/src/rdkafka_sasl_cyrus.c'
             ]
           }
+        ],
+        [ 'WITH_LZ4=="true"',
+          {
+            'sources': [
+              'librdkafka/src/lz4.c',
+              'librdkafka/src/lz4frame.c',
+              'librdkafka/src/lz4hc.c'
+            ]
+          }
         ]
       ],
       'sources': [
-         '<!@(find librdkafka/src -name *.c ! -name rdkafka_sasl* )'
+         '<!@(find librdkafka/src -name *.c ! -name rdkafka_sasl* ! -name lz4* )'
       ],
       'cflags!': [ '-fno-rtti' ],
     }
