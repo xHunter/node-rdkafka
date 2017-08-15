@@ -3,6 +3,7 @@
   "version": "1.0.6",
   "description": "Node.js bindings for librdkafka",
   "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
     "configure": "node-gyp configure",
     "build": "node-gyp build",
@@ -35,8 +36,8 @@
     "node-gyp": "3.x"
   },
   "dependencies": {
-    "bindings": "1.x",
-    "nan": "2.x"
+    "bindings": "^1.3.0",
+    "nan": "^2.6.2"
   },
   "engines": {
     "npm": "^2.7.3"
